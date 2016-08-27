@@ -1,0 +1,28 @@
+version: '2'
+services:
+    nette-nginx:
+        container_name: nette-nginx
+        build: docker/nette-nginx
+        image: nette-nginx
+        volumes:
+            - ./nette:/app
+            - /etc/localtime:/etc/localtime:ro
+        links:
+            - nette-php
+        depends_on:
+            - nette-php
+        ports:
+            - 80:80
+        expose:
+            - 80
+        restart: always
+
+    nette-php:
+        container_name: nette-php
+        build: docker/nette-php
+        image: nette-php
+        volumes:
+            - ./nette:/app
+            - /etc/localtime:/etc/localtime:ro
+        working_dir: /app
+        restart: always
